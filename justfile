@@ -268,20 +268,8 @@ check-ports:
     })();
 
 
-# ─────────────────────────── deploy ──────────────────────────
-
-# Este build cuelga los assets de /pokedex-angular/, asi que 'just preview'
-# (que sirve en la raiz) devolvera 404 en todo. Es para inspeccionar el dist.
-
-# Build con el base-href de GitHub Pages (no publica nada)
-[group('deploy')]
-build-pages:
-    npm run predeploy
-
-# PUBLICA en GitHub Pages (rama gh-pages). Accion externa: confirma antes
-[group('deploy')]
-deploy:
-    npm run deploy
+# El repositorio ya no publica a ningun sitio: 'just build' deja el dist en la
+# raiz y cada plataforma de despliegue tiene su propia configuracion.
 
 
 # ─────────────────────────── limpieza ────────────────────────

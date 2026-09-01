@@ -9,8 +9,6 @@
     "test": "ng test --code-coverage --browsers=Chrome",
     "test:cov": "ng test --code-coverage --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
-    "predeploy": "ng build --configuration production --base-href=/pokedex-angular/",
-    "deploy": "gh-pages -d dist/pokedex-angular",
     "prepare": "husky install"
   },
   "private": true,
