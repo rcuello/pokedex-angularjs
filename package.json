@@ -54,7 +54,6 @@
     "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "gh-pages": "^4.0.0",
     "husky": "^8.0.0",
     "jasmine-core": "~4.0.0",
     "karma": "~6.3.0",
