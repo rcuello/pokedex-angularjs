@@ -16,16 +16,46 @@ El proyecto fue desarrollado usando la librería de JavaScript [Angular](https:/
 
 ## Requisitos mínimos
 
-- [Nodejs](https://nodejs.org) con soporte de largo plazo (LTS).
-- Un navegador web
+- [Nodejs](https://nodejs.org) con soporte de largo plazo (LTS). Angular CLI 14 solo soporta Node 14, 16 y 18.
+- Un navegador web. Chrome, además, para los tests unitarios (corren sobre Karma).
+- [just](https://just.systems) (opcional) como lanzador de tareas.
 
 ## Ambiente de pruebas
 
 Ejecutar en la raíz del proyecto:
 
 ```
-npm start
+just setup   # instala las dependencias (npm ci)
+just dev     # servidor de desarrollo en http://localhost:4200
+just         # lista todas las tareas disponibles
 ```
+
+Sin `just`, los scripts de npm siguen sirviendo igual (`npm ci`, `npm start`, ...): el
+`justfile` los envuelve, no los reemplaza.
+
+`just doctor` revisa el entorno (versión de Node, dependencias, Chrome, PokéAPI) y
+`just check-ports` dice quién ocupa los puertos 4200, 8080 y 9876.
+
+### Tareas principales
+
+| Tarea | Qué hace |
+| --- | --- |
+| `just dev` | Servidor de desarrollo con recarga en caliente. |
+| `just build` | Build de producción en `dist/pokedex-angular`. |
+| `just test` | Tests en watch sobre Chrome. `just test-ci` los corre una vez, headless y con cobertura. |
+| `just lint` / `just format` | ESLint y Prettier. `lint-fix` y `format-check` para las variantes. |
+| `just check` | El gate de cierre: formato, lint, tipos, tests y build. |
+| `just preview` | Sirve el `dist` ya construido en http://127.0.0.1:8080, con fallback de rutas SPA. |
+| `just smoke` | Comprueba contra ese `preview` que el shell, las rutas profundas y el `404.html` responden. |
+| `just clean` | Borra `dist`, `coverage` y las cachés. `clean-all` se lleva también `node_modules`. |
+
+> **Nota:** hoy `just check` falla en el paso de formato. El repo está en el disco con
+> saltos de línea CRLF y `.prettierrc` exige `lf`, así que Prettier y ESLint marcan todos
+> los archivos. Se resuelve normalizando los saltos de línea (`.gitattributes` con
+> `* text=auto eol=lf`) o relajando la regla a `endOfLine: "auto"`.
+
+`ng serve` escucha en `localhost`, que en Node 17+ resuelve a `::1`: hay que abrir
+`http://localhost:4200`, por `127.0.0.1` no responde.
 
 ## Referencias
 
