@@ -145,14 +145,17 @@ smoke:
     // La app se renderiza en el cliente: aqui no se puede afirmar nada del
     // contenido. Lo que si se comprueba, y el build no: que el shell salga con
     // sus bundles, que una ruta profunda caiga en index.html (si no, la SPA
-    // rompe al recargar) y que este el 404.html que gh-pages necesita.
+    // rompe al recargar) y que el HTML no traiga NADA inline. Esto ultimo es la
+    // invariante que permite desplegar con 'script-src' sin 'unsafe-inline':
+    // basta que alguien reactive inlineCritical en angular.json para perderla.
     const BASE = 'http://127.0.0.1:{{PORT}}';
     let fallos = 0;
     const casos = [
       { nombre: 'shell     ', path: '/',                 esperado: 200, requiere: (b) => b.includes('<app-root') },
       { nombre: 'bundles   ', path: '/',                 esperado: 200, requiere: (b) => /<script src="(main|runtime)[^"]*\.js"/.test(b) },
       { nombre: 'ruta honda', path: '/pokemon/1',        esperado: 200, requiere: (b) => b.includes('<app-root') },
-      { nombre: '404 pages ', path: '/404.html',         esperado: 200, requiere: (b) => b.length > 0 },
+      { nombre: 'sin inline', path: '/',                 esperado: 200, requiere: (b) =>
+          !/<script(?![^>]*\bsrc=)/.test(b) && !/<style/.test(b) && !/\son\w+=/.test(b) },
       { nombre: 'favicon   ', path: '/favicon.ico',      esperado: 200, requiere: () => true },
     ];
     (async () => {

@@ -46,7 +46,7 @@ Sin `just`, los scripts de npm siguen sirviendo igual (`npm ci`, `npm start`, ..
 | `just lint` / `just format` | ESLint y Prettier. `lint-fix` y `format-check` para las variantes. |
 | `just check` | El gate de cierre: formato, lint, tipos, tests y build. |
 | `just preview` | Sirve el `dist` ya construido en http://127.0.0.1:8080, con fallback de rutas SPA. |
-| `just smoke` | Comprueba contra ese `preview` que el shell, las rutas profundas y el `404.html` responden. |
+| `just smoke` | Comprueba contra ese `preview` que el shell responde, que las rutas profundas caen en `index.html` y que el HTML no trae nada inline. |
 | `just clean` | Borra `dist`, `coverage` y las cachés. `clean-all` se lleva también `node_modules`. |
 
 > **Nota:** hoy `just check` falla en el paso de formato. El repo está en el disco con
